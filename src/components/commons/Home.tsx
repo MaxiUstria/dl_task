@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Navbar from './Navbar';
+import BankAccountsPage from '../bankAccounts/BankAccountsPage';
 
 export interface HomeProps {
   isAuthenticated: boolean | null;
@@ -15,8 +16,14 @@ class Home extends Component<HomeProps, HomeState> {
   render() {
     return (
       <>
-        {!this.props.isAuthenticated && <Redirect to="/log_in" />}
-        <Navbar />
+        {!this.props.isAuthenticated ? (
+          <Redirect to="/log_in" />
+        ) : (
+          <>
+            <Navbar />
+            <BankAccountsPage />
+          </>
+        )}
       </>
     );
   }

@@ -9,15 +9,14 @@ import LogIn from './components/authentication/LogIn';
 
 function App() {
   return (
-    (
     <div className="container-fluid">
-        <Router history={history}>
-          <Route path="/" exact={true} component={Home} />
-          <Route path="/log_in" exact={true} component={LogIn} />
-        </Router>
+      <Router history={history}>
+        <Route path="/" exact={true} component={Home} />
+        <Route path="/bankAccounts" component={Home} />
+        <Route path="/log_in" exact={true} component={LogIn} />
+      </Router>
     </div>
-  )
-  )
+  );
 }
 
 export default App;

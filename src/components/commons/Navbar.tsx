@@ -2,7 +2,13 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { ICurrent, User } from '../../types';
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Box,
+} from '@material-ui/core';
 
 import LogOut from '../authentication/LogOut';
 
@@ -17,14 +23,12 @@ class Navbar extends Component<NavbarProps, NavbarState> {
     return (
       <AppBar position="static">
         <Toolbar>
+          <Box display="flex" flexGrow={1}></Box>
           <IconButton
             edge="start"
             color="secondary"
             aria-label="menu"
           ></IconButton>
-          <div style={{ textAlign: 'right' }}>
-            <LogOut />
-          </div>
           {this.props.user ? (
             <Typography variant="h6" color="inherit">
               Welcome, {this.props.user.name}
@@ -32,6 +36,7 @@ class Navbar extends Component<NavbarProps, NavbarState> {
           ) : (
             console.log('vacio')
           )}
+          <LogOut />
         </Toolbar>
       </AppBar>
     );

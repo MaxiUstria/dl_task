@@ -1,6 +1,6 @@
 import * as constants from '../constants';
-import { User } from '../../types';
-import { logIn } from '../../back/dataApi';
+import { User, BankAccount } from '../../types';
+import { logIn, getAccounts } from '../../back/dataApi';
 
 export interface IAuthenticate {
   type: constants.AUTHENTICATE;
@@ -30,3 +30,16 @@ export function unauthenticate(): IUnauthenticate {
   };
 }
 export type AuthenticationAction = IAuthenticate | IUnauthenticate;
+
+export interface IBankAccounts {
+  type: constants.GET_BANK_ACCOUNTS;
+  bankAccounts: [BankAccount];
+}
+
+export function getBankAccounts(userId: number): IBankAccounts {
+  const bankAccounts: any = getAccounts(userId);
+  return {
+    type: constants.GET_BANK_ACCOUNTS,
+    bankAccounts,
+  };
+}

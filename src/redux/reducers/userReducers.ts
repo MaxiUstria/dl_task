@@ -1,12 +1,17 @@
-import { IAuthenticate, IUnauthenticate } from '../actions/current';
-import { AUTHENTICATE, UNAUTHENTICATE } from '../constants';
+import {
+  IAuthenticate,
+  IBankAccounts,
+  IUnauthenticate,
+} from '../actions/current';
+import { AUTHENTICATE, UNAUTHENTICATE, GET_BANK_ACCOUNTS } from '../constants';
 import { ICurrent } from '../../types';
 export default function currentReducer(
   state: ICurrent = {
     user: null,
     isAuthenticated: null,
+    bankAccounts: [],
   },
-  action: IAuthenticate | IUnauthenticate,
+  action: IAuthenticate | IUnauthenticate | IBankAccounts,
 ): ICurrent {
   switch (action.type) {
     case AUTHENTICATE:
@@ -16,7 +21,12 @@ export default function currentReducer(
         isAuthenticated: true,
       };
     case UNAUTHENTICATE:
-      return { user: null, isAuthenticated: false };
+      return { user: null, isAuthenticated: false, bankAccounts: [] };
+    case GET_BANK_ACCOUNTS:
+      return {
+        ...state,
+        bankAccounts: action.bankAccounts,
+      };
   }
   return state;
 }
