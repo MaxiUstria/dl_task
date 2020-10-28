@@ -7,6 +7,7 @@ import {
   FormControl,
   InputLabel,
   TextField,
+  Button,
 } from '@material-ui/core/';
 
 export interface BankAccountFormProps {
@@ -14,6 +15,7 @@ export interface BankAccountFormProps {
   onChangeOrigin: (origin: string) => void;
   onChangeDestination: (destination: string) => void;
   onChangeAmount: (amount: string) => void;
+  nextStep: () => void;
   bankAccounts: any;
 }
 
@@ -60,6 +62,8 @@ class BankAccountForm extends Component<
                 }
               />
             </FormControl>
+            </div>
+            <div style={{ display: 'block' }}>
             <FormControl>
               <TextField
                 id="standard-basic"
@@ -82,8 +86,18 @@ class BankAccountForm extends Component<
                 multiline
               />
             </FormControl>
+            </div>
+          
+          <div style={{ display: 'block' }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={this.props.nextStep}
+            >
+              Next
+            </Button>
           </div>
-          <div style={{ display: 'block' }}></div>
         </form>
       </div>
     );

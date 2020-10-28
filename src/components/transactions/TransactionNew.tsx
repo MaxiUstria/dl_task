@@ -49,9 +49,16 @@ class TransactionNew extends Component<
     this.setState({ amount });
     console.log(this.state);
   };
+  changeStep = () => {
+    this.setState({ showFormReview: !this.state.showFormReview });
+  };
   renderContent() {
     if (this.state.showFormReview) {
-      return <TransactionFormReview />;
+      return (
+        (
+        <TransactionFormReview {...this.state} backStep={this.changeStep} />
+      )
+      );
     }
 
     return (
@@ -60,6 +67,7 @@ class TransactionNew extends Component<
         onChangeOrigin={this.handleOriginAccountIdValue}
         onChangeDestination={this.handleDestinationAccountIdValue}
         onChangeAmount={this.handleamountValue}
+        nextStep={this.changeStep}
         bankAccounts={this.props.bankAccounts}
       />
     );
