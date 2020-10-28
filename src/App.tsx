@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Router, Route, Switch } from 'react-router-dom';
+import Home from './components/commons/Home';
 import './App.css';
+
+import history from "./history";
+import LogIn from './components/authentication/LogIn';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    (
+    <div className="container-fluid">
+        <Router history={history}>
+          <Route path="/" exact={true} component={Home} />
+          <Route path="/log_in" exact={true} component={LogIn} />
+        </Router>
     </div>
-  );
+  )
+  )
 }
 
 export default App;
