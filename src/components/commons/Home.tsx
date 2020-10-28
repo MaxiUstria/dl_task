@@ -3,7 +3,6 @@ import { ICurrent } from '../../types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import LogIn from '../authentication/LogIn';
 import Navbar from './Navbar';
 
 export interface HomeProps {
@@ -12,7 +11,7 @@ export interface HomeProps {
 
 export interface HomeState {}
 
-class Home extends React.Component<HomeProps, HomeState> {
+class Home extends Component<HomeProps, HomeState> {
   render() {
     return (
       <>

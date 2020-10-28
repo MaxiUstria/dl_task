@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { unauthenticate } from '../../redux/actions/current';
-import { ICurrent, User } from '../../types';
+import { ICurrent } from '../../types';
 
 export interface LogOutProps {
   unauthenticateConnect: () => void;

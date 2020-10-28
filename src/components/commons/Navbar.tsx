@@ -12,7 +12,7 @@ export interface NavbarProps {
 
 export interface NavbarState {}
 
-class Navbar extends React.Component<NavbarProps, NavbarState> {
+class Navbar extends Component<NavbarProps, NavbarState> {
   render() {
     return (
       <AppBar position="static">

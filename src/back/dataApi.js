@@ -1,4 +1,5 @@
-import { users, bankAccounts } from './mockData';
+import { users } from './mockData';
+
 
 export const logIn = (username, password) => {
   const user = users.find((user) => {

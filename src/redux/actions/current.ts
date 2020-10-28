@@ -1,6 +1,5 @@
-import { ThunkDispatch as Dispatch } from 'redux-thunk';
 import * as constants from '../constants';
-import { ICurrent, User } from '../../types';
+import { User } from '../../types';
 import { logIn } from '../../back/dataApi';
 
 export interface IAuthenticate {
