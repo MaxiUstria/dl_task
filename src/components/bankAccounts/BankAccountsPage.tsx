@@ -10,7 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { bankAccounts } from '../../back/mockData';
 
 export interface BankAccountsPageProps {
   user?: any;
@@ -47,7 +46,7 @@ class BankAccountsPage extends Component<
               </TableRow>
             </TableHead>
             <TableBody>
-              {bankAccounts.map((account) => (
+              {this.props.bankAccounts.map((account: any) => (
                 <TableRow key={account.id}>
                   <TableCell component="th" scope="account">
                     {account.id}

@@ -5,6 +5,7 @@ import './App.css';
 
 import history from "./history";
 import LogIn from './components/authentication/LogIn';
+import BankAccountNew from './components/transactions/TransactionNew';
 
 
 function App() {
@@ -12,7 +13,11 @@ function App() {
     <div className="container-fluid">
       <Router history={history}>
         <Route path="/" exact={true} component={Home} />
-        <Route path="/bankAccounts" component={Home} />
+        <Route
+          path="/new_transaction"
+          exact={true}
+          component={BankAccountNew}
+        />
         <Route path="/log_in" exact={true} component={LogIn} />
       </Router>
     </div>

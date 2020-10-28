@@ -2,13 +2,9 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { ICurrent, User } from '../../types';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-} from '@material-ui/core';
+import { Link } from 'react-router-dom'
+
+import { AppBar, Toolbar, Button, Typography, Box } from '@material-ui/core';
 
 import LogOut from '../authentication/LogOut';
 
@@ -23,18 +19,20 @@ class Navbar extends Component<NavbarProps, NavbarState> {
     return (
       <AppBar position="static">
         <Toolbar>
-          <Box display="flex" flexGrow={1}></Box>
-          <IconButton
-            edge="start"
-            color="secondary"
-            aria-label="menu"
-          ></IconButton>
+          <Box display="flex" flexGrow={1}>
+                <Button component={Link} to="/new_transaction"
+                      variant="contained"
+                      color="primary"
+                    >
+                      New Transaction
+                    </Button>
+          </Box>
           {this.props.user ? (
             <Typography variant="h6" color="inherit">
               Welcome, {this.props.user.name}
             </Typography>
           ) : (
-            console.log('vacio')
+            <></>
           )}
           <LogOut />
         </Toolbar>
