@@ -1,4 +1,6 @@
-import { users, bankAccounts, transactions } from './mockData';
+import * as data from './mockData.json';
+
+
 
 
 
@@ -6,7 +8,7 @@ import { users, bankAccounts, transactions } from './mockData';
 
 
 export const logIn = (username, password) => {
-  const user = users.find((user) => {
+  const user = data.users.find((user) => {
     return user.password === password && user.username === username;
   });
 
@@ -14,7 +16,7 @@ export const logIn = (username, password) => {
 };
 
 export const getAccounts = (userId) => {
-  const accounts = bankAccounts.filter((account) => {
+  const accounts = data.bankAccounts.filter((account) => {
     return account.user_id === userId;
   });
   return accounts;
@@ -26,13 +28,20 @@ export const createTransaction = (
   amount,
   currency,
   comment,
+
 ) => {
-  const transaction = { id: 1, origin, destination, amount, currency, comment };
-  if (transactions.length !== 0) {
-    const max = transactions.reduce(function (prev, current) {
+  const user_id = data.bankAccounts.find((account) => {
+    return account.number === origin;
+  }).user_id;
+  const transaction = { id: 1, origin, destination, amount, currency, comment, user_id };
+  if (data.transactions.length !== 0) {
+    const max = data.transactions.reduce(function (prev, current) {
       return prev.id > current.id ? prev : current;
     });
+
     transaction.id = max.id + 1;
   }
+data.transactions.push(transaction);
+
   return transaction;
 };
