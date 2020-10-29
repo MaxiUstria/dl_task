@@ -1,4 +1,6 @@
-import { users, bankAccounts } from './mockData';
+import { users, bankAccounts, transactions } from './mockData';
+
+
 
 
 
@@ -16,4 +18,21 @@ export const getAccounts = (userId) => {
     return account.user_id === userId;
   });
   return accounts;
+};
+
+export const createTransaction = (
+  origin,
+  destination,
+  amount,
+  currency,
+  comment,
+) => {
+  const transaction = { id: 1, origin, destination, amount, currency, comment };
+  if (transactions.length !== 0) {
+    const max = transactions.reduce(function (prev, current) {
+      return prev.id > current.id ? prev : current;
+    });
+    transaction.id = max.id + 1;
+  }
+  return transaction;
 };

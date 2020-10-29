@@ -23,8 +23,11 @@ const bankAccounts = [
   { id: 5, number: '12345672', user_id: 1 },
 ];
 
+const transactions = [];
+
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
 module.exports = {
   users,
   bankAccounts,
+  transactions,
 };

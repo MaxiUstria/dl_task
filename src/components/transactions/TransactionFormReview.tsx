@@ -10,6 +10,7 @@ export interface TransactionFormReviewProps {
   amount: string;
   comment: string;
   backStep: () => void;
+  submitForm: () => void;
 }
 
 export interface TransactionFormReviewState {}
@@ -29,10 +30,17 @@ class TransactionFormReview extends Component<
         <Button
           type="submit"
           variant="contained"
-          color="primary"
           onClick={this.props.backStep}
         >
-          back
+          Back
+        </Button>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick={this.props.submitForm}
+        >
+          Submit
         </Button>
       </div>
     );

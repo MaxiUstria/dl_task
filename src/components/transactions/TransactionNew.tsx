@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import history from '../../utils/history';
+import { postTransaction } from '../../redux/actions/current';
 
 import TransactionFormReview from './TransactionFormReview';
 import TransactionForm from './TransactionForm';
@@ -10,7 +12,14 @@ import { ICurrent } from '../../types';
 
 export interface TransactionNewProps {
   bankAccounts: any;
-  isAuthenticated?: boolean;
+  isAuthenticated?: boolean | null;
+  submitTransaction: (
+    originAccountId: string,
+    destinationAccountId: string,
+    amount: string,
+    currency: string,
+    comment: string,
+  ) => void;
 }
 
 export interface TransactionNewState {
@@ -35,29 +44,37 @@ class TransactionNew extends Component<
 
   handleCommentValue = (comment: string) => {
     this.setState({ comment });
-    console.log(this.state);
   };
   handleOriginAccountIdValue = (originAccountId: string) => {
     this.setState({ originAccountId });
-    console.log(this.state);
   };
   handleDestinationAccountIdValue = (destinationAccountId: string) => {
     this.setState({ destinationAccountId });
-    console.log(this.state);
   };
   handleamountValue = (amount: string) => {
     this.setState({ amount });
-    console.log(this.state);
   };
   changeStep = () => {
     this.setState({ showFormReview: !this.state.showFormReview });
   };
+  newTransaction = () => {
+    this.props.submitTransaction(
+      this.state.originAccountId,
+      this.state.destinationAccountId,
+      this.state.amount,
+      'USD',
+      this.state.comment,
+    );
+    history.push('/show_transaction');
+  };
   renderContent() {
     if (this.state.showFormReview) {
       return (
-        (
-        <TransactionFormReview {...this.state} backStep={this.changeStep} />
-      )
+        <TransactionFormReview
+          {...this.state}
+          backStep={this.changeStep}
+          submitForm={this.newTransaction}
+        />
       );
     }
 
@@ -95,4 +112,8 @@ const mapStateToProps = (state: ICurrent) => {
   };
 };
 
-export default connect(mapStateToProps, null)(TransactionNew);
+const mapDispatchToProps = {
+  submitTransaction: postTransaction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionNew);

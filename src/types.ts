@@ -2,6 +2,7 @@ export interface ICurrent {
   isAuthenticated: boolean | null;
   user: User | null;
   bankAccounts?: [BankAccount] | [];
+  transaction?: Transaction | null;
 }
 
 export type User = {
@@ -17,4 +18,13 @@ export type BankAccount = {
   id: number;
   number: string;
   user_id: number;
+};
+
+export type Transaction = {
+  id: number;
+  origin: string;
+  destination: string;
+  amount: number;
+  currency: string;
+  comment: string;
 };

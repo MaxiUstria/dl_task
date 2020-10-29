@@ -3,9 +3,10 @@ import { Router, Route } from 'react-router-dom';
 import Home from './components/commons/Home';
 import './App.css';
 
-import history from "./history";
+import history from './utils/history';
 import LogIn from './components/authentication/LogIn';
-import BankAccountNew from './components/transactions/TransactionNew';
+import TransactionNew from './components/transactions/TransactionNew';
+import TransactionResume from './components/transactions/TransactionResume';
 
 
 function App() {
@@ -16,7 +17,12 @@ function App() {
         <Route
           path="/new_transaction"
           exact={true}
-          component={BankAccountNew}
+          component={TransactionNew}
+        />
+        <Route
+          path="/show_transaction"
+          exact={true}
+          component={TransactionResume}
         />
         <Route path="/log_in" exact={true} component={LogIn} />
       </Router>
