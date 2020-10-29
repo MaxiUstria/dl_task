@@ -12,6 +12,24 @@ let transactions = [
   },
 ];
 
+let value = {
+  "USD": {
+    "USD": 1,
+    "$U": 42.70,
+    "EUR": 0.86
+  },
+  "EUR":{
+    "EUR": 1,
+    "USD": 1.17,
+    "$U": 49.84
+  },
+  "$U":{
+    "EUR": 0.020,
+    "USD": 0.023,
+    "$U": 1
+  }
+}
+
 
 export const logIn = (username, password) => {
   const user = data.users.find((user) => {
@@ -59,4 +77,23 @@ export const getUserTransactions = (user_id) => {
     return transaction.user_id === user_id;
   });
   return userTransactoins;
+};
+
+export const findAccount = (account_number) => {
+  const account = data.bankAccounts.find((account) => {
+    return account.number == account_number;
+  });
+  return account;
+};
+
+export const calculateAmount = (origin_number, destination_number, amount) => {
+  const origin_account = data.bankAccounts.find((account) => {
+    return account.number == origin_number;
+  });
+  const destination_account = data.bankAccounts.find((account) => {
+    return account.number == destination_number;
+  });
+  
+  const changedAmount = value[origin_account.currency][destination_account.currency]*parseFloat(amount)
+  return changedAmount;
 };

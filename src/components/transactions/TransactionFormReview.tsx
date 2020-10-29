@@ -7,7 +7,8 @@ import { Button, TextField, Grid, FormControl } from '@material-ui/core/';
 export interface TransactionFormReviewProps {
   originAccountId: string;
   destinationAccountId: string;
-  amount: string;
+  convertedAmount: string;
+  convertedCurrency: string;
   comment: string;
   backStep: () => void;
   submitForm: () => void;
@@ -23,7 +24,7 @@ class TransactionFormReview extends Component<
     return (
       <div>
         <h1>Transaction review</h1>
-        <Grid container justify = "center" style={{marginTop: "5em"}}>
+        <Grid container justify="center" style={{ marginTop: '5em' }}>
           <FormControl>
             <TextField
               disabled
@@ -42,8 +43,10 @@ class TransactionFormReview extends Component<
             <TextField
               disabled
               id="filled-disabled"
-              label="Amount"
-              value={this.props.amount}
+              label="Currency"
+              value={
+                this.props.convertedCurrency + ' ' + this.props.convertedAmount
+              }
               variant="filled"
             />
             <TextField
@@ -53,7 +56,11 @@ class TransactionFormReview extends Component<
               value={this.props.comment}
               variant="filled"
             />
-            <Button type="submit" variant="contained" onClick={this.props.backStep}>
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={this.props.backStep}
+            >
               Back
             </Button>
             <Button
