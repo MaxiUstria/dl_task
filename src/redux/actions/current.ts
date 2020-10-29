@@ -1,6 +1,11 @@
 import * as constants from '../constants';
 import { User, BankAccount, Transaction } from '../../types';
-import { logIn, getAccounts, createTransaction } from '../../back/dataApi';
+import {
+  logIn,
+  getAccounts,
+  createTransaction,
+  getUserTransactions,
+} from '../../back/dataApi';
 
 export interface IAuthenticate {
   type: constants.AUTHENTICATE;
@@ -66,5 +71,18 @@ export function postTransaction(
   return {
     type: constants.CREATE_TRANSACTION,
     transaction,
+  };
+}
+
+export interface ITransactions {
+  type: constants.GET_TRANSACTIONS;
+  transactions: any;
+}
+
+export function getTransactionsList(userId: number): ITransactions {
+  const transactions: any = getUserTransactions(userId);
+  return {
+    type: constants.GET_TRANSACTIONS,
+    transactions,
   };
 }

@@ -47,7 +47,7 @@ class BankAccountForm extends Component<
               >
                 {this.props.bankAccounts.map((account: any) => {
                   return (
-                    <MenuItem value={account.id}>{account.number}</MenuItem>
+                    <MenuItem value={account.number}>{account.number}</MenuItem>
                   );
                 })}
               </Select>

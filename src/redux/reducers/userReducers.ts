@@ -3,12 +3,14 @@ import {
   IBankAccounts,
   ITransaction,
   IUnauthenticate,
+  ITransactions,
 } from '../actions/current';
 import {
   AUTHENTICATE,
   UNAUTHENTICATE,
   GET_BANK_ACCOUNTS,
   CREATE_TRANSACTION,
+  GET_TRANSACTIONS,
 } from '../constants';
 import { ICurrent } from '../../types';
 export default function currentReducer(
@@ -17,8 +19,14 @@ export default function currentReducer(
     isAuthenticated: null,
     bankAccounts: [],
     transaction: null,
+    transactions: [],
   },
-  action: IAuthenticate | IUnauthenticate | IBankAccounts | ITransaction,
+  action:
+    | IAuthenticate
+    | IUnauthenticate
+    | IBankAccounts
+    | ITransaction
+    | ITransactions,
 ): ICurrent {
   switch (action.type) {
     case AUTHENTICATE:
@@ -38,6 +46,11 @@ export default function currentReducer(
       return {
         ...state,
         transaction: action.transaction,
+      };
+    case GET_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: action.transactions,
       };
   }
   return state;

@@ -3,6 +3,7 @@ export interface ICurrent {
   user: User | null;
   bankAccounts?: [BankAccount] | [];
   transaction?: Transaction | null;
+  transactions?: [Transaction] | [];
 }
 
 export type User = {

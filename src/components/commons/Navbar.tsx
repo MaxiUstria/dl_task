@@ -20,12 +20,25 @@ class Navbar extends Component<NavbarProps, NavbarState> {
       <AppBar position="static">
         <Toolbar>
           <Box display="flex" flexGrow={1}>
-                <Button component={Link} to="/new_transaction"
-                      variant="contained"
-                      color="primary"
-                    >
-                      New Transaction
-                    </Button>
+            <Button
+              component={Link}
+              to="/transactions"
+              variant="contained"
+              color="primary"
+            >
+              Transactions
+            </Button>
+            <Button component={Link} to="/" variant="contained" color="primary">
+              Accounts
+            </Button>
+            <Button
+              component={Link}
+              to="/new_transaction"
+              variant="contained"
+              color="secondary"
+            >
+              New Transaction
+            </Button>
           </Box>
           {this.props.user ? (
             <Typography variant="h6" color="inherit">

@@ -22,7 +22,5 @@
     { "id": 3, "number": "12345670", "user_id": 1 },
     { "id": 4, "number": "12345671", "user_id": 1 },
     { "id": 5, "number": "12345672", "user_id": 1 }
-  ],
-
-  "transactions": []
+  ]
 }
