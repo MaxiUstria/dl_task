@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import { Button } from '@material-ui/core/';
+import { Button, TextField, Grid, FormControl } from '@material-ui/core/';
 
 
 export interface TransactionFormReviewProps {
@@ -23,25 +23,48 @@ class TransactionFormReview extends Component<
     return (
       <div>
         <h1>Transaction review</h1>
-        <p>{this.props.originAccountId}</p>
-        <p>{this.props.destinationAccountId}</p>
-        <p>{this.props.amount}</p>
-        <p>{this.props.comment}</p>
-        <Button
-          type="submit"
-          variant="contained"
-          onClick={this.props.backStep}
-        >
-          Back
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={this.props.submitForm}
-        >
-          Submit
-        </Button>
+        <Grid container justify = "center" style={{marginTop: "5em"}}>
+          <FormControl>
+            <TextField
+              disabled
+              id="filled-disabled"
+              label="Origin"
+              value={this.props.originAccountId}
+              variant="filled"
+            />
+            <TextField
+              disabled
+              id="filled-disabled"
+              label="Destination"
+              value={this.props.destinationAccountId}
+              variant="filled"
+            />
+            <TextField
+              disabled
+              id="filled-disabled"
+              label="Amount"
+              value={this.props.amount}
+              variant="filled"
+            />
+            <TextField
+              disabled
+              id="filled-disabled"
+              label="Comment"
+              value={this.props.comment}
+              variant="filled"
+            />
+            <Button type="submit" variant="contained" onClick={this.props.backStep}>
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.props.submitForm}
+            >
+              Submit
+            </Button>
+          </FormControl>
+        </Grid>
       </div>
     );
   }

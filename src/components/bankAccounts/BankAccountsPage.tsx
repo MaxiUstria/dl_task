@@ -12,9 +12,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 export interface BankAccountsPageProps {
-  user?: any;
-  bankAccounts?: any;
-  isAuthenticated?: boolean | null;
+  user: any;
+  bankAccounts: any;
+  isAuthenticated: boolean | null;
   getAccounts: (userId: number) => void;
 }
 
@@ -41,8 +41,9 @@ class BankAccountsPage extends Component<
             <TableHead>
               <TableRow>
                 <TableCell>Account Id</TableCell>
-                <TableCell align="right">Account Number</TableCell>
-                <TableCell align="right">User</TableCell>
+                <TableCell >Account Number</TableCell>
+                <TableCell >Currency</TableCell>
+                <TableCell >User</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -51,8 +52,9 @@ class BankAccountsPage extends Component<
                   <TableCell component="th" scope="account">
                     {account.id}
                   </TableCell>
-                  <TableCell align="right">{account.number}</TableCell>
-                  <TableCell align="right">
+                  <TableCell >{account.number}</TableCell>
+                  <TableCell >{account.currency}</TableCell>
+                  <TableCell >
                     {this.props.user.username}
                   </TableCell>
                 </TableRow>

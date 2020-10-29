@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ class LogIn extends Component<LogInProps, LogInState> {
     return (
       <>
         {this.props.isAuthenticated && <Redirect to="/" />}
-        <div className="Login">
+        <Grid container justify = "center" style={{marginTop: "5em"}}>
           <form noValidate autoComplete="off">
             <div style={{ display: 'block' }}>
               <TextField
@@ -50,21 +50,24 @@ class LogIn extends Component<LogInProps, LogInState> {
                 }
               />
             </div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                this.props.authenticateConnect(
-                  this.state.username,
-                  this.state.password,
-                )
-              }
-            >
-              Log in
-            </Button>
+            <br></br>
+            <Grid container justify="flex-end">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  this.props.authenticateConnect(
+                    this.state.username,
+                    this.state.password,
+                  )
+                }
+              >
+                Log in
+              </Button>
+            </Grid>
           </form>
-        </div>
+          </Grid>
       </>
     );
   }

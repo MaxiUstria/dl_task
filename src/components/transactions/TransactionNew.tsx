@@ -28,6 +28,7 @@ export interface TransactionNewState {
   destinationAccountId: string;
   amount: string;
   comment: string;
+  errors: any;
 }
 
 class TransactionNew extends Component<
@@ -38,8 +39,9 @@ class TransactionNew extends Component<
     showFormReview: false,
     originAccountId: '',
     destinationAccountId: '',
-    amount: '0',
+    amount: '',
     comment: '',
+    errors: {},
   };
 
   handleCommentValue = (comment: string) => {
@@ -55,17 +57,55 @@ class TransactionNew extends Component<
     this.setState({ amount });
   };
   changeStep = () => {
-    this.setState({ showFormReview: !this.state.showFormReview });
+    let paramsOk: boolean = true;
+    if(!this.state.showFormReview){
+      paramsOk =  this.validateForm()
+    }
+
+    if (paramsOk){
+      this.setState({ showFormReview: !this.state.showFormReview });
+    }
   };
+  validateForm = () => {
+    const { destinationAccountId, originAccountId, amount } = this.state;
+    let errors: any = {}
+    let paramsOk: boolean = true;
+    const bankAccount = this.props.bankAccounts.find((account: any) => {
+      return account.number === destinationAccountId;
+    });
+    if (destinationAccountId.length === 0){
+        errors["destination"] = 'Destination can not be empty'
+      paramsOk = false;
+    } else {
+      if (bankAccount)  {
+        errors["destination"] = 'Destination can not be one of your accounts'
+        paramsOk = false;
+      }
+    }
+    
+    if (originAccountId.length === 0){
+      errors["origin"] =  'Origin can not be empty'
+      paramsOk = false;
+    }
+
+    if (amount.length === 0){
+      errors["amount"] =  'Amunt can not be empty'
+      paramsOk = false;
+    } 
+
+    this.setState({ errors });
+
+    return paramsOk;
+  }
   newTransaction = () => {
-    this.props.submitTransaction(
-      this.state.originAccountId,
-      this.state.destinationAccountId,
-      this.state.amount,
-      'USD',
-      this.state.comment,
-    );
-    history.push('/show_transaction');
+      this.props.submitTransaction(
+        this.state.originAccountId,
+        this.state.destinationAccountId,
+        this.state.amount,
+        'USD',
+        this.state.comment,
+      );
+      history.push('/show_transaction');
   };
   renderContent() {
     if (this.state.showFormReview) {
@@ -86,6 +126,7 @@ class TransactionNew extends Component<
         onChangeAmount={this.handleamountValue}
         nextStep={this.changeStep}
         bankAccounts={this.props.bankAccounts}
+        {...this.state}
       />
     );
   }

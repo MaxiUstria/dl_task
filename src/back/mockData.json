@@ -17,10 +17,11 @@
   ],
 
   "bankAccounts": [
-    { "id": 1, "number": "12345678", "user_id": 1 },
-    { "id": 2, "number": "12345679", "user_id": 1 },
-    { "id": 3, "number": "12345670", "user_id": 1 },
-    { "id": 4, "number": "12345671", "user_id": 1 },
-    { "id": 5, "number": "12345672", "user_id": 1 }
+    { "id": 1, "number": "12345678", "currency": "USD", "user_id": 1 },
+    { "id": 2, "number": "12345679", "currency": "$U", "user_id": 1 },
+    { "id": 3, "number": "12345670", "currency": "EUR", "user_id": 1 },
+    { "id": 4, "number": "12345671", "currency": "USD", "user_id": 1 },
+    { "id": 5, "number": "12345672", "currency": "USD", "user_id": 1 },
+    { "id": 6, "number": "123", "currency": "USD", "user_id": 2 }
   ]
 }
