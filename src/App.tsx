@@ -2,6 +2,8 @@ import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import Home from './components/commons/Home';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import history from './utils/history';
 import LogIn from './components/authentication/LogIn';
@@ -28,6 +30,7 @@ function App() {
         <Route path="/transactions" exact={true} component={TransactionIndex} />
         <Route path="/log_in" exact={true} component={LogIn} />
       </Router>
+      <ToastContainer />
     </div>
   );
 }

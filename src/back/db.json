@@ -80,6 +80,46 @@
       "id": 1,
       "origin": "12345679",
       "user_id": 1
+    },
+    {
+      "origin": "12345678",
+      "destination": "123",
+      "amount": 123124,
+      "currency": "USD",
+      "comment": "asdfasdf",
+      "user_id": 1,
+      "exchangeInfo": "USD-USD/1",
+      "id": 2
+    },
+    {
+      "origin": "12345678",
+      "destination": "123",
+      "amount": 12124,
+      "currency": "USD",
+      "comment": "asdfasd",
+      "user_id": 1,
+      "exchangeInfo": "USD-USD/1",
+      "id": 3
+    },
+    {
+      "origin": "12345678",
+      "destination": "123",
+      "amount": 123124,
+      "currency": "USD",
+      "comment": "sdfasf",
+      "user_id": 1,
+      "exchangeInfo": "USD-USD/1",
+      "id": 4
+    },
+    {
+      "origin": "12345679",
+      "destination": "123",
+      "amount": 2831.829,
+      "currency": "USD",
+      "comment": "sadfasdf",
+      "user_id": 1,
+      "exchangeInfo": "$U-USD/0.023",
+      "id": 5
     }
   ]
 }

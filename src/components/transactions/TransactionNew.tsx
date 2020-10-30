@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { findAccount, calculateAmount, createTransaction, getAccounts } from '../../back/dataApi';
+import { toast } from 'react-toastify';
 
 import TransactionFormReview from './TransactionFormReview';
 import TransactionForm from './TransactionForm';
@@ -163,6 +164,7 @@ const TransactionNew = (props: TransactionNewProps) => {
       transactionState.comment,
       transactionState.exchangeInfo,
     ).then((transaction) => {
+      toast.success('Transaction created');
       setTransactionState({
         ...transactionState,
         showTransaction: true,
