@@ -41,6 +41,7 @@ export interface TransactionNewState {
   destinationAccount: BankAccount | {};
   transaction: Transaction;
   bankAccounts: BankAccounts;
+  exchangeInfo: string;
 }
 
 const TransactionNew = (props: TransactionNewProps) => {
@@ -58,6 +59,7 @@ const TransactionNew = (props: TransactionNewProps) => {
       destinationAccount: {},
       transaction: {} as Transaction,
       bankAccounts: [],
+      exchangeInfo: '',
     },
   );
   useEffect(() => {
@@ -99,11 +101,12 @@ const TransactionNew = (props: TransactionNewProps) => {
           transactionState.originAccountId,
           transactionState.destinationAccountId,
           transactionState.amount,
-        ).then((convertedAmount) => {
+        ).then(([convertedAmount, exchangeInfo]) => {
           setTransactionState({
             ...transactionState,
             showFormReview: !transactionState.showFormReview,
             convertedAmount: convertedAmount,
+            exchangeInfo,
           });
         });
       }
@@ -158,8 +161,13 @@ const TransactionNew = (props: TransactionNewProps) => {
       transactionState.convertedAmount,
       transactionState.convertedCurrency,
       transactionState.comment,
+      transactionState.exchangeInfo,
     ).then((transaction) => {
-      setTransactionState({ ...transactionState, showTransaction: true, transaction })
+      setTransactionState({
+        ...transactionState,
+        showTransaction: true,
+        transaction,
+      });
     });
   };
   const renderContent = () => {

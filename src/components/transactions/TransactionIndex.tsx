@@ -46,6 +46,7 @@ const TransactionIndex = (props: TransactionIndexProps) => {
                   <TableCell>Destination Account Number</TableCell>
                   <TableCell>Currency</TableCell>
                   <TableCell>Amount</TableCell>
+                  <TableCell>Exchange Info</TableCell>
                   <TableCell>Comment</TableCell>
                 </TableRow>
               </TableHead>
@@ -58,6 +59,7 @@ const TransactionIndex = (props: TransactionIndexProps) => {
                       <TableCell>{transaction.destination}</TableCell>
                       <TableCell>{transaction.currency}</TableCell>
                       <TableCell>{transaction.amount}</TableCell>
+                      <TableCell>{transaction.exchangeInfo}</TableCell>
                       <TableCell>{transaction.comment}</TableCell>
                     </TableRow>
                   ))}

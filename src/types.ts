@@ -26,6 +26,7 @@ export type Transaction = {
   origin: string;
   destination: string;
   amount: number;
+  exchangeInfo: string;
   currency: string;
   comment: string;
 };

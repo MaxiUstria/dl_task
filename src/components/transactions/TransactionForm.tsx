@@ -9,7 +9,7 @@ import {
   Button,
   Grid,
 } from '@material-ui/core/';
-import { BankAccount, BankAccounts, Errors } from '../../types';
+import { BankAccounts, Errors } from '../../types';
 
 type BankAccountFormProps = {
   onChangeComment: (comment: string) => void;

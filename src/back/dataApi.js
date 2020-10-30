@@ -15,7 +15,7 @@ export const createTransaction = async (
   amount,
   currency,
   comment,
-
+  exchangeInfo,
 ) => {
   const user_id = data.bankAccounts.find((account) => {
 return account.number === origin;
@@ -28,6 +28,7 @@ const transaction = {
   currency,
   comment,
   user_id,
+  exchangeInfo,
 };
 await fetch('http://localhost:3001/transactions', {
   method: 'POST',
@@ -60,6 +61,8 @@ export const findAccount = async (account_number) => {
 };
 
 export const calculateAmount = async (origin_number, destination_number, amount) => {
+let exchangeInfo = '';
+
   const origin_account = data.bankAccounts.find((account) => {
     return account.number == origin_number;
   });
@@ -71,9 +74,17 @@ let changedAmount = '0';
 
 const resp = await fetch('http://localhost:3001/value');
 const value = await resp.json();
+exchangeInfo =
+  origin_account.currency +
+  '-' +
+  destination_account.currency +
+  '/' +
+  value[origin_account.currency][destination_account.currency].toString();
+
 changedAmount =
   value[origin_account.currency][destination_account.currency] *
   parseFloat(amount);
 
-    return changedAmount;
+return [changedAmount, exchangeInfo];
+
 };
