@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component } from 'react';
 
 import { Button, TextField, Grid, FormControl } from '@material-ui/core/';
 
@@ -14,67 +13,60 @@ export interface TransactionFormReviewProps {
   submitForm: () => void;
 }
 
-export interface TransactionFormReviewState {}
-
-class TransactionFormReview extends Component<
-  TransactionFormReviewProps,
-  TransactionFormReviewState
-> {
-  render() {
-    return (
-      <div>
-        <h1>Transaction review</h1>
-        <Grid container justify="center" style={{ marginTop: '5em' }}>
-          <FormControl>
-            <TextField
-              disabled
-              id="filled-disabled"
-              label="Origin"
-              value={this.props.originAccountId}
-              variant="filled"
-            />
-            <TextField
-              disabled
-              id="filled-disabled"
-              label="Destination"
-              value={this.props.destinationAccountId}
-              variant="filled"
-            />
-            <TextField
-              disabled
-              id="filled-disabled"
-              label="Currency"
-              value={
-                this.props.convertedCurrency + ' ' + this.props.convertedAmount
-              }
-              variant="filled"
-            />
-            <TextField
-              disabled
-              id="filled-disabled"
-              label="Comment"
-              value={this.props.comment}
-              variant="filled"
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={this.props.backStep}
-            >
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.props.submitForm}
-            >
-              Submit
-            </Button>
-          </FormControl>
-        </Grid>
-      </div>
-    );
-  }
+const TransactionFormReview = (props: TransactionFormReviewProps) => {
+  return (
+    <div>
+      <h1>Transaction review</h1>
+      <Grid container justify="center" style={{ marginTop: '5em' }}>
+        <FormControl>
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Origin"
+            value={props.originAccountId}
+            variant="filled"
+          />
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Destination"
+            value={props.destinationAccountId}
+            variant="filled"
+          />
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Currency"
+            value={
+              props.convertedCurrency + ' ' + props.convertedAmount
+            }
+            variant="filled"
+          />
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Comment"
+            value={props.comment}
+            variant="filled"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={props.backStep}
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={props.submitForm}
+          >
+            Submit
+          </Button>
+        </FormControl>
+      </Grid>
+    </div>
+  );
 }
 
 export default TransactionFormReview;

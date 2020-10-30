@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTransactionsList } from '../../redux/actions/current';
@@ -21,63 +20,56 @@ export interface TransactionIndexProps {
   getTransactions: (userId: number) => void;
 }
 
-export interface TransactionIndexState {}
-
-class TransactionIndex extends Component<
-  TransactionIndexProps,
-  TransactionIndexState
-> {
-  componentDidMount() {
-    const { user, getTransactions } = this.props;
+const TransactionIndex = (props: TransactionIndexProps) => {
+  const { getTransactions, user } = props;;
+  useEffect(() => {
     if (user) {
       getTransactions(user.id);
     }
-  }
-  render() {
-    return (
-      <div>
-        {!this.props.isAuthenticated ? (
-          <Redirect to="/log_in" />
-        ) : (
-          <>
-            <Navbar />
-            <h1>Transactions</h1>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Transaction Id</TableCell>
-                    <TableCell>Origin Account Number</TableCell>
-                    <TableCell>Destination Account Number</TableCell>
-                    <TableCell>Currency</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Comment</TableCell>
-                  </TableRow>
-                </TableHead>
-                {this.props.transactions ? (
-                  <TableBody>
-                    {this.props.transactions.map((transaction: any) => (
-                      <TableRow key={transaction.id}>
-                        <TableCell>{transaction.id}</TableCell>
-                        <TableCell>{transaction.origin}</TableCell>
-                        <TableCell>{transaction.destination}</TableCell>
-                        <TableCell>{transaction.currency}</TableCell>
-                        <TableCell>{transaction.amount}</TableCell>
-                        <TableCell>{transaction.comment}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                ) : (
-                  <></>
-                )}
-              </Table>
-            </TableContainer>
-          </>
-        )}
-      </div>
-    );
-  }
-}
+  }, []);
+  return (
+    <div>
+      {!props.isAuthenticated ? (
+        <Redirect to="/log_in" />
+      ) : (
+        <>
+          <Navbar />
+          <h1>Transactions</h1>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Transaction Id</TableCell>
+                  <TableCell>Origin Account Number</TableCell>
+                  <TableCell>Destination Account Number</TableCell>
+                  <TableCell>Currency</TableCell>
+                  <TableCell>Amount</TableCell>
+                  <TableCell>Comment</TableCell>
+                </TableRow>
+              </TableHead>
+              {props.transactions ? (
+                <TableBody>
+                  {props.transactions.map((transaction: any) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>{transaction.id}</TableCell>
+                      <TableCell>{transaction.origin}</TableCell>
+                      <TableCell>{transaction.destination}</TableCell>
+                      <TableCell>{transaction.currency}</TableCell>
+                      <TableCell>{transaction.amount}</TableCell>
+                      <TableCell>{transaction.comment}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              ) : (
+                <></>
+              )}
+            </Table>
+          </TableContainer>
+        </>
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = (state: ICurrent) => {
   return {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -16,62 +16,62 @@ export interface LogInState {
   password: string;
 }
 
-class LogIn extends Component<LogInProps, LogInState> {
-  state = { username: '', password: '' };
-  setUsernameValue = (username: string) => {
-    this.setState({ username });
+const LogIn = (props: LogInProps) => {
+  const [user, setUser] = useState<LogInState>({
+    username: '', password: '' 
+  });
+  const setUsernameValue = (username: string) => {
+    setUser({ ...user, username });
   };
-  setPasswordValue = (password: string) => {
-    this.setState({ password });
+  const setPasswordValue = (password: string) => {
+    setUser({ ...user, password });
   };
-  render() {
-    return (
-      <>
-        {this.props.isAuthenticated && <Redirect to="/" />}
-        <Grid container justify = "center" style={{marginTop: "5em"}}>
-          <form noValidate autoComplete="off">
-            <div style={{ display: 'block' }}>
-              <TextField
-                label="Username"
-                name="username"
-                value={this.state.username}
-                onChange={(ev: React.ChangeEvent<HTMLInputElement>): void =>
-                  this.setUsernameValue(ev.target.value)
-                }
-              />
-            </div>
-            <div style={{ display: 'block' }}>
-              <TextField
-                label="password"
-                type="password"
-                name="password"
-                onChange={(ev: React.ChangeEvent<HTMLInputElement>): void =>
-                  this.setPasswordValue(ev.target.value)
-                }
-              />
-            </div>
-            <br></br>
-            <Grid container justify="flex-end">
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                onClick={() =>
-                  this.props.authenticateConnect(
-                    this.state.username,
-                    this.state.password,
-                  )
-                }
-              >
-                Log in
-              </Button>
-            </Grid>
-          </form>
+  return (
+    <>
+      {props.isAuthenticated && <Redirect to="/" />}
+      <Grid container justify="center" style={{ marginTop: '5em' }}>
+        <form noValidate autoComplete="off">
+          <div style={{ display: 'block' }}>
+            <TextField
+              label="Username"
+              name="username"
+              value={user.username}
+              onChange={(ev: React.ChangeEvent<HTMLInputElement>): void =>
+                setUsernameValue(ev.target.value)
+              }
+            />
+          </div>
+          <div style={{ display: 'block' }}>
+            <TextField
+              label="password"
+              type="password"
+              name="password"
+              onChange={(ev: React.ChangeEvent<HTMLInputElement>): void =>
+                setPasswordValue(ev.target.value)
+              }
+            />
+          </div>
+          <br></br>
+          <Grid container justify="flex-end">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                props.authenticateConnect(
+                  user.username,
+                  user.password,
+                )
+              }
+            >
+              Log in
+            </Button>
           </Grid>
-      </>
-    );
-  }
-}
+        </form>
+      </Grid>
+    </>
+  );
+};
 
 const mapDispatchToProps = {
   authenticateConnect: authenticate,

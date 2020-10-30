@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import history from '../../utils/history';
 import { postTransaction } from '../../redux/actions/current';
@@ -35,11 +34,8 @@ export interface TransactionNewState {
   destinationAccount: any;
 }
 
-class TransactionNew extends Component<
-  TransactionNewProps,
-  TransactionNewState
-> {
-  state = {
+const TransactionNew = (props: TransactionNewProps) => {
+  const [transactionState, setTransactionState] = useState<TransactionNewState>({
     showFormReview: false,
     originAccountId: '',
     destinationAccountId: '',
@@ -49,46 +45,44 @@ class TransactionNew extends Component<
     comment: '',
     errors: {},
     destinationAccount: {},
+  });
+  const handleCommentValue = (comment: string) => {
+    setTransactionState({ ...transactionState, comment });
   };
-
-  handleCommentValue = (comment: string) => {
-    this.setState({ comment });
+  const handleOriginAccountIdValue = (originAccountId: string) => {
+    setTransactionState({ ...transactionState, originAccountId });
   };
-  handleOriginAccountIdValue = (originAccountId: string) => {
-    this.setState({ originAccountId });
-  };
-  handleDestinationAccountIdValue = (destinationAccountId: string) => {
-    this.setState({ destinationAccountId });
+  const handleDestinationAccountIdValue = (destinationAccountId: string) => {
     const destinationAccount = findAccount(destinationAccountId);
     if (destinationAccount)   {
       const convertedCurrency = destinationAccount.currency;
-      this.setState({ destinationAccount, convertedCurrency });
+      setTransactionState({ ...transactionState, destinationAccountId, destinationAccount, convertedCurrency });
     } else{
-      this.setState({ destinationAccount: {} })
+      setTransactionState({ ...transactionState, destinationAccountId, destinationAccount: {} })
     }
   };
-  handleamountValue = (amount: string) => {
-    this.setState({ amount });
+  const handleamountValue = (amount: string) => {
+    setTransactionState({ ...transactionState, amount });
   };
-  changeStep = () => {
+  const changeStep = () => {
     let paramsOk: boolean = true;
-    if (!this.state.showFormReview) {
-      paramsOk = this.validateForm();
+    if (!transactionState.showFormReview) {
+      paramsOk = validateForm();
       if (paramsOk){
-        const convertedAmount: string = calculateAmount(this.state.originAccountId, this.state.destinationAccountId, this.state.amount).toString();
-        this.setState({ convertedAmount });
+        const convertedAmount: string = calculateAmount(transactionState.originAccountId, transactionState.destinationAccountId, transactionState.amount).toString();
+        setTransactionState({ ...transactionState, showFormReview: !transactionState.showFormReview, convertedAmount: convertedAmount });
       }
+    } else if (paramsOk) {
+      setTransactionState({ ...transactionState, showFormReview: !transactionState.showFormReview });
     }
 
-    if (paramsOk) {
-      this.setState({ showFormReview: !this.state.showFormReview });
-    }
+    
   };
-  validateForm = () => {
-    const { destinationAccountId, originAccountId, amount, destinationAccount } = this.state;
+  const validateForm = () => {
+    const { destinationAccountId, originAccountId, amount, destinationAccount } = transactionState;
     let errors: any = {};
     let paramsOk: boolean = true;
-    const bankAccount = this.props.bankAccounts.find((account: any) => {
+    const bankAccount = props.bankAccounts.find((account: any) => {
       return account.number === destinationAccountId;
     });
 
@@ -117,58 +111,57 @@ class TransactionNew extends Component<
       paramsOk = false;
     }
 
-    this.setState({ errors });
+    setTransactionState({ ...transactionState,errors });
 
     return paramsOk;
   };
-  newTransaction = () => {
+  const newTransaction = () => {
     
-    this.props.submitTransaction(
-      this.state.originAccountId,
-      this.state.destinationAccountId,
-      this.state.convertedAmount,
-      this.state.convertedCurrency,
-      this.state.comment,
+    props.submitTransaction(
+      transactionState.originAccountId,
+      transactionState.destinationAccountId,
+      transactionState.convertedAmount,
+      transactionState.convertedCurrency,
+      transactionState.comment,
     );
     history.push('/show_transaction');
   };
-  renderContent() {
-    if (this.state.showFormReview) {
+  const renderContent = () => {
+    if (transactionState.showFormReview) {
       return (
         <TransactionFormReview
-          {...this.state}
-          backStep={this.changeStep}
-          submitForm={this.newTransaction}
+          {...transactionState}
+          convertedAmount={transactionState.convertedAmount}
+          backStep={changeStep}
+          submitForm={newTransaction}
         />
       );
     }
 
     return (
       <TransactionForm
-        onChangeComment={this.handleCommentValue}
-        onChangeOrigin={this.handleOriginAccountIdValue}
-        onChangeDestination={this.handleDestinationAccountIdValue}
-        onChangeAmount={this.handleamountValue}
-        nextStep={this.changeStep}
-        bankAccounts={this.props.bankAccounts}
-        {...this.state}
+        onChangeComment={handleCommentValue}
+        onChangeOrigin={handleOriginAccountIdValue}
+        onChangeDestination={handleDestinationAccountIdValue}
+        onChangeAmount={handleamountValue}
+        nextStep={changeStep}
+        bankAccounts={props.bankAccounts}
+        {...transactionState}
       />
     );
   }
-  render() {
-    return (
-      <div>
-        {!this.props.isAuthenticated ? (
-          <Redirect to="/log_in" />
-        ) : (
-          <>
-            <Navbar />
-            {this.renderContent()}
-          </>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {!props.isAuthenticated ? (
+        <Redirect to="/log_in" />
+      ) : (
+        <>
+          <Navbar />
+          {renderContent()}
+        </>
+      )}
+    </div>
+  );
 }
 
 const mapStateToProps = (state: ICurrent) => {

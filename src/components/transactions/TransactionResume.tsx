@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -11,33 +10,26 @@ export interface TransactionResumeProps {
   transaction?: any;
 }
 
-export interface TransactionResumeState {}
-
-class TransactionResume extends Component<
-  TransactionResumeProps,
-  TransactionResumeState
-> {
-  render() {
-    return (
-      <div>
-        {!this.props.isAuthenticated ? (
-          <Redirect to="/log_in" />
-        ) : (
-          <>
-            <Navbar />
-            <h1>Transaction Resume</h1>
-            <p>{this.props.transaction.id}</p>
-            <p>{this.props.transaction.origin}</p>
-            <p>{this.props.transaction.destination}</p>
-            <p>{this.props.transaction.amount}</p>
-            <p>{this.props.transaction.currency}</p>
-            <p>{this.props.transaction.comment}</p>
-          </>
-        )}
-      </div>
-    );
-  }
-}
+const TransactionResume = (props: TransactionResumeProps) => {
+  return (
+    <div>
+      {!props.isAuthenticated ? (
+        <Redirect to="/log_in" />
+      ) : (
+        <>
+          <Navbar />
+          <h1>Transaction Resume</h1>
+          <p>{props.transaction.id}</p>
+          <p>{props.transaction.origin}</p>
+          <p>{props.transaction.destination}</p>
+          <p>{props.transaction.amount}</p>
+          <p>{props.transaction.currency}</p>
+          <p>{props.transaction.comment}</p>
+        </>
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = (state: ICurrent) => {
   return {

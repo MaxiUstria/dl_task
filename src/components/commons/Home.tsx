@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ICurrent } from '../../types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -10,24 +10,20 @@ export interface HomeProps {
   isAuthenticated: boolean | null;
 }
 
-export interface HomeState {}
-
-class Home extends Component<HomeProps, HomeState> {
-  render() {
-    return (
-      <>
-        {!this.props.isAuthenticated ? (
-          <Redirect to="/log_in" />
-        ) : (
-          <>
-            <Navbar />
-            <BankAccountsPage />
-          </>
-        )}
-      </>
-    );
-  }
-}
+const Home = (props: HomeProps) => {
+  return (
+    <>
+      {!props.isAuthenticated ? (
+        <Redirect to="/log_in" />
+      ) : (
+        <>
+          <Navbar />
+          <BankAccountsPage />
+        </>
+      )}
+    </>
+  );
+};
 
 const mapStateToProps = (state: ICurrent) => {
   return {
