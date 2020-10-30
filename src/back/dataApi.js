@@ -1,4 +1,4 @@
-import * as data from './mockData.json';
+import * as data from './db.json';
 
 let transactions = [
   {
