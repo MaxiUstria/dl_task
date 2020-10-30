@@ -11,9 +11,6 @@ export default function currentReducer(
   state: ICurrent = {
     user: null,
     isAuthenticated: null,
-    bankAccounts: [],
-    transaction: null,
-    transactions: [],
   },
   action: IAuthenticate | IUnauthenticate,
 ): ICurrent {
@@ -25,7 +22,7 @@ export default function currentReducer(
         isAuthenticated: true,
       };
     case UNAUTHENTICATE:
-      return { user: null, isAuthenticated: false, };
+      return { user: null, isAuthenticated: false };
   }
   return state;
 }
