@@ -1,9 +1,6 @@
 export interface ICurrent {
   isAuthenticated: boolean | null;
   user: User | null;
-  bankAccounts?: [BankAccount] | [];
-  transaction?: Transaction | null;
-  transactions?: [Transaction] | [];
 }
 
 export type User = {

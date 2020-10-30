@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { compose, createStore } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import './index.css';
 import App from './App';
 import currentReducer from './redux/reducers/userReducers';
@@ -28,8 +29,7 @@ if (
 }
 const store = createStore<any, any, any, any>(
   persistedReducer,
-  undefined,
-  composeEnhancers(),
+  applyMiddleware(thunkMiddleware),
 );
 
 let persistor = persistStore(store);

@@ -30,7 +30,7 @@ const BankAccountForm = (props: BankAccountFormProps) => {
     let value: string = event.target.value as string;
   
     props.onChangeOrigin(value);
-  }  
+  }
   return (
     <div className="Login">
       <h1>Create Transaction</h1>

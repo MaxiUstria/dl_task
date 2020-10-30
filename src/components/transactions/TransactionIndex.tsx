@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getTransactionsList } from '../../redux/actions/current';
+import { getUserTransactions } from '../../back/dataApi';
 
 import { ICurrent } from '../../types';
 import Navbar from '../commons/Navbar';
@@ -15,16 +15,17 @@ import Paper from '@material-ui/core/Paper';
 
 export interface TransactionIndexProps {
   isAuthenticated?: boolean | null;
-  transactions?: any;
   user?: any;
-  getTransactions: (userId: number) => void;
 }
 
 const TransactionIndex = (props: TransactionIndexProps) => {
-  const { getTransactions, user } = props;;
+  const [transactions, setTransactions] = useState([]);
+  const { user } = props;
   useEffect(() => {
     if (user) {
-      getTransactions(user.id);
+      getUserTransactions(user.id).then((transactions) => {
+        setTransactions(transactions);
+      });
     }
   }, []);
   return (
@@ -47,9 +48,9 @@ const TransactionIndex = (props: TransactionIndexProps) => {
                   <TableCell>Comment</TableCell>
                 </TableRow>
               </TableHead>
-              {props.transactions ? (
+              {transactions ? (
                 <TableBody>
-                  {props.transactions.map((transaction: any) => (
+                  {transactions.map((transaction: any) => (
                     <TableRow key={transaction.id}>
                       <TableCell>{transaction.id}</TableCell>
                       <TableCell>{transaction.origin}</TableCell>
@@ -73,14 +74,9 @@ const TransactionIndex = (props: TransactionIndexProps) => {
 
 const mapStateToProps = (state: ICurrent) => {
   return {
-    transactions: state.transactions,
     isAuthenticated: state.isAuthenticated,
     user: state.user,
   };
 };
 
-const mapDispatchToProps = {
-  getTransactions: getTransactionsList,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionIndex);
+export default connect(mapStateToProps, null)(TransactionIndex);

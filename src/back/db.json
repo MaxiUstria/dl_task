@@ -15,13 +15,97 @@
       "surname": "Ipsum"
     }
   ],
-
   "bankAccounts": [
-    { "id": 1, "number": "12345678", "currency": "USD", "user_id": 1 },
-    { "id": 2, "number": "12345679", "currency": "$U", "user_id": 1 },
-    { "id": 3, "number": "12345670", "currency": "EUR", "user_id": 1 },
-    { "id": 4, "number": "12345671", "currency": "USD", "user_id": 1 },
-    { "id": 5, "number": "12345672", "currency": "USD", "user_id": 1 },
-    { "id": 6, "number": "123", "currency": "USD", "user_id": 2 }
+    {
+      "id": 1,
+      "number": "12345678",
+      "currency": "USD",
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "number": "12345679",
+      "currency": "$U",
+      "user_id": 1
+    },
+    {
+      "id": 3,
+      "number": "12345670",
+      "currency": "EUR",
+      "user_id": 1
+    },
+    {
+      "id": 4,
+      "number": "12345671",
+      "currency": "USD",
+      "user_id": 1
+    },
+    {
+      "id": 5,
+      "number": "12345672",
+      "currency": "USD",
+      "user_id": 1
+    },
+    {
+      "id": 6,
+      "number": "123",
+      "currency": "USD",
+      "user_id": 2
+    }
+  ],
+  "value": {
+    "USD": {
+      "USD": 1,
+      "$U": 42.7,
+      "EUR": 0.86
+    },
+    "EUR": {
+      "EUR": 1,
+      "USD": 1.17,
+      "$U": 49.84
+    },
+    "$U": {
+      "EUR": 0.02,
+      "USD": 0.023,
+      "$U": 1
+    }
+  },
+  "transactions": [
+    {
+      "amount": "123123",
+      "comment": "sadfas",
+      "currency": "USD",
+      "destination": "asdfas",
+      "id": 1,
+      "origin": "12345679",
+      "user_id": 1
+    },
+    {
+      "origin": "12345679",
+      "destination": "123",
+      "amount": 2831.852,
+      "currency": "USD",
+      "comment": "asdfasf",
+      "user_id": 1,
+      "id": 2
+    },
+    {
+      "origin": "12345671",
+      "destination": "123",
+      "amount": 123123,
+      "currency": "USD",
+      "comment": "asdfasfd",
+      "user_id": 1,
+      "id": 3
+    },
+    {
+      "origin": "12345679",
+      "destination": "123",
+      "amount": 2831.852,
+      "currency": "USD",
+      "comment": "asdfasdf",
+      "user_id": 1,
+      "id": 4
+    }
   ]
 }

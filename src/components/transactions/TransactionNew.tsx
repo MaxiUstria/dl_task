@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import history from '../../utils/history';
-import { postTransaction } from '../../redux/actions/current';
-import { findAccount, calculateAmount } from '../../back/dataApi';
+import { findAccount, calculateAmount, createTransaction, getAccounts } from '../../back/dataApi';
 
 import TransactionFormReview from './TransactionFormReview';
 import TransactionForm from './TransactionForm';
 import Navbar from '../commons/Navbar';
 import { connect } from 'react-redux';
 import { ICurrent } from '../../types';
+import TransactionResume from './TransactionResume';
 
 export interface TransactionNewProps {
-  bankAccounts: any;
   isAuthenticated?: boolean | null;
+  user?: any;
   submitTransaction: (
     originAccountId: string,
     destinationAccountId: string,
@@ -24,6 +23,7 @@ export interface TransactionNewProps {
 
 export interface TransactionNewState {
   showFormReview: boolean;
+  showTransaction: boolean;
   originAccountId: string;
   destinationAccountId: string;
   amount: string;
@@ -32,11 +32,14 @@ export interface TransactionNewState {
   comment: string;
   errors: any;
   destinationAccount: any;
+  transaction: any;
+  bankAccounts: any;
 }
 
 const TransactionNew = (props: TransactionNewProps) => {
   const [transactionState, setTransactionState] = useState<TransactionNewState>({
     showFormReview: false,
+    showTransaction: false,
     originAccountId: '',
     destinationAccountId: '',
     amount: '',
@@ -45,7 +48,19 @@ const TransactionNew = (props: TransactionNewProps) => {
     comment: '',
     errors: {},
     destinationAccount: {},
+    transaction: {},
+    bankAccounts: [],
   });
+  useEffect(() => {
+    const { user } = props;
+    if (!transactionState.bankAccounts || transactionState.bankAccounts.length === 0) {
+      if (user) {
+        getAccounts(user.id).then((bankAccounts: any) => {
+          setTransactionState({ ...transactionState, bankAccounts });
+        });
+      }
+    }
+  }, []);
   const handleCommentValue = (comment: string) => {
     setTransactionState({ ...transactionState, comment });
   };
@@ -53,13 +68,15 @@ const TransactionNew = (props: TransactionNewProps) => {
     setTransactionState({ ...transactionState, originAccountId });
   };
   const handleDestinationAccountIdValue = (destinationAccountId: string) => {
-    const destinationAccount = findAccount(destinationAccountId);
-    if (destinationAccount)   {
-      const convertedCurrency = destinationAccount.currency;
-      setTransactionState({ ...transactionState, destinationAccountId, destinationAccount, convertedCurrency });
-    } else{
-      setTransactionState({ ...transactionState, destinationAccountId, destinationAccount: {} })
-    }
+    findAccount(destinationAccountId)
+    .then(destinationAccount => {
+      if (destinationAccount)   {
+        const convertedCurrency = destinationAccount.currency;
+        setTransactionState({ ...transactionState, destinationAccountId, destinationAccount, convertedCurrency });
+      } else{
+        setTransactionState({ ...transactionState, destinationAccountId, destinationAccount: {} })
+      }
+    });
   };
   const handleamountValue = (amount: string) => {
     setTransactionState({ ...transactionState, amount });
@@ -69,8 +86,17 @@ const TransactionNew = (props: TransactionNewProps) => {
     if (!transactionState.showFormReview) {
       paramsOk = validateForm();
       if (paramsOk){
-        const convertedAmount: string = calculateAmount(transactionState.originAccountId, transactionState.destinationAccountId, transactionState.amount).toString();
-        setTransactionState({ ...transactionState, showFormReview: !transactionState.showFormReview, convertedAmount: convertedAmount });
+        calculateAmount(
+          transactionState.originAccountId,
+          transactionState.destinationAccountId,
+          transactionState.amount,
+        ).then((convertedAmount) => {
+          setTransactionState({
+            ...transactionState,
+            showFormReview: !transactionState.showFormReview,
+            convertedAmount: convertedAmount,
+          });
+        });
       }
     } else if (paramsOk) {
       setTransactionState({ ...transactionState, showFormReview: !transactionState.showFormReview });
@@ -79,10 +105,10 @@ const TransactionNew = (props: TransactionNewProps) => {
     
   };
   const validateForm = () => {
-    const { destinationAccountId, originAccountId, amount, destinationAccount } = transactionState;
+    const { destinationAccountId, originAccountId, amount, destinationAccount, bankAccounts } = transactionState;
     let errors: any = {};
     let paramsOk: boolean = true;
-    const bankAccount = props.bankAccounts.find((account: any) => {
+    const bankAccount = bankAccounts.find((account: any) => {
       return account.number === destinationAccountId;
     });
 
@@ -117,16 +143,24 @@ const TransactionNew = (props: TransactionNewProps) => {
   };
   const newTransaction = () => {
     
-    props.submitTransaction(
+    createTransaction(
       transactionState.originAccountId,
       transactionState.destinationAccountId,
       transactionState.convertedAmount,
       transactionState.convertedCurrency,
       transactionState.comment,
-    );
-    history.push('/show_transaction');
+    ).then((transaction) => {
+      setTransactionState({ ...transactionState, showTransaction: true, transaction })
+    });
   };
   const renderContent = () => {
+    if (transactionState.showTransaction){
+      return (
+        <TransactionResume
+          transaction={transactionState.transaction}
+        />
+      );
+    }
     if (transactionState.showFormReview) {
       return (
         <TransactionFormReview
@@ -145,7 +179,6 @@ const TransactionNew = (props: TransactionNewProps) => {
         onChangeDestination={handleDestinationAccountIdValue}
         onChangeAmount={handleamountValue}
         nextStep={changeStep}
-        bankAccounts={props.bankAccounts}
         {...transactionState}
       />
     );
@@ -166,13 +199,9 @@ const TransactionNew = (props: TransactionNewProps) => {
 
 const mapStateToProps = (state: ICurrent) => {
   return {
-    bankAccounts: state.bankAccounts,
     isAuthenticated: state.isAuthenticated,
+    user: state.user,
   };
 };
 
-const mapDispatchToProps = {
-  submitTransaction: postTransaction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionNew);
+export default connect(mapStateToProps, null)(TransactionNew);

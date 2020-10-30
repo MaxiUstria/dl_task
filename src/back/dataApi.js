@@ -39,14 +39,16 @@ export const logIn = (username, password) => {
   return user || null;
 };
 
-export const getAccounts = (userId) => {
-  const accounts = data.bankAccounts.filter((account) => {
+export const getAccounts = async (userId) => {
+  const resp = await fetch("http://localhost:3001/bankAccounts");
+  const bankAccounts = await resp.json();
+  const accounts = bankAccounts.filter((account) => {
     return account.user_id === userId;
   });
   return accounts;
 };
 
-export const createTransaction = (
+export const createTransaction = async (
   origin,
   destination,
   amount,
@@ -58,42 +60,62 @@ export const createTransaction = (
 return account.number === origin;
 
   }).user_id;
-  const transaction = { id: 1, origin, destination, amount, currency, comment, user_id };
-  if (transactions.length !== 0) {
-    const max = transactions.reduce(function (prev, current) {
-      return prev.id > current.id ? prev : current;
-    });
+const transaction = {
+  origin,
+  destination,
+  amount,
+  currency,
+  comment,
+  user_id,
+};
+await fetch('http://localhost:3001/transactions', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(transaction),
+});
 
-    transaction.id = max.id + 1;
-  }
-transactions.push(transaction);
+return transaction;
 
 
-  return transaction;
+
+
 };
 
-export const getUserTransactions = (user_id) => {
+export const getUserTransactions = async (user_id) => {
+  const resp = await fetch("http://localhost:3001/transactions");
+  const transactions = await resp.json();
   const userTransactoins = transactions.filter((transaction) => {
     return transaction.user_id === user_id;
   });
   return userTransactoins;
 };
 
-export const findAccount = (account_number) => {
-  const account = data.bankAccounts.find((account) => {
+export const findAccount = async (account_number) => {
+  const resp = await fetch("http://localhost:3001/bankAccounts");
+  const bankAccounts = await resp.json();
+  const account = bankAccounts.find((account) => {
     return account.number == account_number;
   });
   return account;
 };
 
-export const calculateAmount = (origin_number, destination_number, amount) => {
+export const calculateAmount = async (origin_number, destination_number, amount) => {
   const origin_account = data.bankAccounts.find((account) => {
     return account.number == origin_number;
   });
   const destination_account = data.bankAccounts.find((account) => {
     return account.number == destination_number;
   });
-  
-  const changedAmount = value[origin_account.currency][destination_account.currency]*parseFloat(amount)
-  return changedAmount;
+
+let changedAmount = '0';
+
+const resp = await fetch('http://localhost:3001/value');
+const value = await resp.json();
+changedAmount =
+  value[origin_account.currency][destination_account.currency] *
+  parseFloat(amount);
+
+    return changedAmount;
 };

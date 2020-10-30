@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ICurrent } from '../../types';
-import { getBankAccounts } from '../../redux/actions/current';
+import { getAccounts } from '../../back/dataApi';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,21 +13,22 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 export interface BankAccountsPageProps {
-  user: any;
-  bankAccounts: any;
-  isAuthenticated: boolean | null;
-  getAccounts: (userId: number) => void;
+  user?: any;
+  isAuthenticated?: boolean | null;
 }
 
 const BankAccountsPage = (props: BankAccountsPageProps) => {
+  const [bankAccounts, setBankAccounts] = useState([]);
   useEffect(() => {
-    const { user, bankAccounts, getAccounts } = props;
+    const { user  } = props;
     if (!bankAccounts || bankAccounts.length === 0) {
       if (user) {
-        getAccounts(user.id);
+        getAccounts(user.id).then((bankAccounts: any) => {
+          setBankAccounts(bankAccounts);
+        });
       }
     }
-  });
+  }, []);
   return (
     <div>
       <h2>Bank Accounts</h2>
@@ -41,7 +43,7 @@ const BankAccountsPage = (props: BankAccountsPageProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.bankAccounts.map((account: any) => (
+            {bankAccounts.map((account: any) => (
               <TableRow key={account.id}>
                 <TableCell component="th" scope="account">
                   {account.id}
@@ -62,14 +64,9 @@ const BankAccountsPage = (props: BankAccountsPageProps) => {
 
 const mapStateToProps = (state: ICurrent) => {
   return {
-    bankAccounts: state.bankAccounts,
     user: state.user,
     isAuthenticated: state.isAuthenticated,
   };
 };
 
-const mapDispatchToProps = {
-  getAccounts: getBankAccounts,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BankAccountsPage);
+export default connect(mapStateToProps, null)(BankAccountsPage);
