@@ -6,11 +6,11 @@ export interface IAuthenticate {
   type: constants.AUTHENTICATE;
   user: User;
 }
-export function logIn(user: any): IAuthenticate {
-    return {
-      type: constants.AUTHENTICATE,
-      user: user,
-    };
+export function logIn(user: User): IAuthenticate {
+  return {
+    type: constants.AUTHENTICATE,
+    user: user,
+  };
 }
 export interface IUnauthenticate {
   type: constants.UNAUTHENTICATE;
@@ -30,7 +30,7 @@ export function authenticate(username: string, password: string) {
         });
         
         if (user){
-          dispatch(logIn(user));
+          dispatch(logIn(user as User));
         }
       });
   };

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ICurrent } from '../../types';
+import { BankAccounts, BankAccount, ICurrent, User } from '../../types';
 import { getAccounts } from '../../back/dataApi';
 
 import Table from '@material-ui/core/Table';
@@ -13,17 +13,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 export interface BankAccountsPageProps {
-  user?: any;
+  user?: User;
   isAuthenticated?: boolean | null;
 }
 
 const BankAccountsPage = (props: BankAccountsPageProps) => {
-  const [bankAccounts, setBankAccounts] = useState([]);
+  const [bankAccounts, setBankAccounts] = useState<BankAccounts>([]);
   useEffect(() => {
-    const { user  } = props;
+    const { user } = props;
     if (!bankAccounts || bankAccounts.length === 0) {
       if (user) {
-        getAccounts(user.id).then((bankAccounts: any) => {
+        getAccounts(user.id).then((bankAccounts: BankAccounts) => {
           setBankAccounts(bankAccounts);
         });
       }
@@ -37,22 +37,20 @@ const BankAccountsPage = (props: BankAccountsPageProps) => {
           <TableHead>
             <TableRow>
               <TableCell>Account Id</TableCell>
-              <TableCell >Account Number</TableCell>
-              <TableCell >Currency</TableCell>
-              <TableCell >User</TableCell>
+              <TableCell>Account Number</TableCell>
+              <TableCell>Currency</TableCell>
+              <TableCell>User</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {bankAccounts.map((account: any) => (
+            {bankAccounts.map((account: BankAccount) => (
               <TableRow key={account.id}>
                 <TableCell component="th" scope="account">
                   {account.id}
                 </TableCell>
-                <TableCell >{account.number}</TableCell>
-                <TableCell >{account.currency}</TableCell>
-                <TableCell >
-                  {props.user.username}
-                </TableCell>
+                <TableCell>{account.number}</TableCell>
+                <TableCell>{account.currency}</TableCell>
+                <TableCell>{props.user?.username}</TableCell>
               </TableRow>
             ))}
           </TableBody>

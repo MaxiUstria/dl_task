@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUserTransactions } from '../../back/dataApi';
+import { User, Transactions } from '../../types';
 
 import { ICurrent } from '../../types';
 import Navbar from '../commons/Navbar';
@@ -15,11 +16,11 @@ import Paper from '@material-ui/core/Paper';
 
 export interface TransactionIndexProps {
   isAuthenticated?: boolean | null;
-  user?: any;
+  user?: User | null;
 }
 
 const TransactionIndex = (props: TransactionIndexProps) => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transactions>([]);
   const { user } = props;
   useEffect(() => {
     if (user) {
@@ -50,7 +51,7 @@ const TransactionIndex = (props: TransactionIndexProps) => {
               </TableHead>
               {transactions ? (
                 <TableBody>
-                  {transactions.map((transaction: any) => (
+                  {transactions.map((transaction) => (
                     <TableRow key={transaction.id}>
                       <TableCell>{transaction.id}</TableCell>
                       <TableCell>{transaction.origin}</TableCell>

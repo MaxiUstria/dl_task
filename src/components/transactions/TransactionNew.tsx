@@ -6,12 +6,19 @@ import TransactionFormReview from './TransactionFormReview';
 import TransactionForm from './TransactionForm';
 import Navbar from '../commons/Navbar';
 import { connect } from 'react-redux';
-import { ICurrent } from '../../types';
+import {
+  ICurrent,
+  BankAccount,
+  BankAccounts,
+  Transaction,
+  Errors,
+  User,
+} from '../../types';
 import TransactionResume from './TransactionResume';
 
 export interface TransactionNewProps {
   isAuthenticated?: boolean | null;
-  user?: any;
+  user?: User | null;
   submitTransaction: (
     originAccountId: string,
     destinationAccountId: string,
@@ -30,32 +37,34 @@ export interface TransactionNewState {
   convertedAmount: string;
   convertedCurrency: string;
   comment: string;
-  errors: any;
-  destinationAccount: any;
-  transaction: any;
-  bankAccounts: any;
+  errors: Errors;
+  destinationAccount: BankAccount | {};
+  transaction: Transaction;
+  bankAccounts: BankAccounts;
 }
 
 const TransactionNew = (props: TransactionNewProps) => {
-  const [transactionState, setTransactionState] = useState<TransactionNewState>({
-    showFormReview: false,
-    showTransaction: false,
-    originAccountId: '',
-    destinationAccountId: '',
-    amount: '',
-    convertedAmount: '',
-    convertedCurrency: '',
-    comment: '',
-    errors: {},
-    destinationAccount: {},
-    transaction: {},
-    bankAccounts: [],
-  });
+  const [transactionState, setTransactionState] = useState<TransactionNewState>(
+    {
+      showFormReview: false,
+      showTransaction: false,
+      originAccountId: '',
+      destinationAccountId: '',
+      amount: '',
+      convertedAmount: '',
+      convertedCurrency: '',
+      comment: '',
+      errors: { destination: '', origin: '', amount: '' },
+      destinationAccount: {},
+      transaction: {} as Transaction,
+      bankAccounts: [],
+    },
+  );
   useEffect(() => {
     const { user } = props;
     if (!transactionState.bankAccounts || transactionState.bankAccounts.length === 0) {
       if (user) {
-        getAccounts(user.id).then((bankAccounts: any) => {
+        getAccounts(user.id).then((bankAccounts: BankAccounts) => {
           setTransactionState({ ...transactionState, bankAccounts });
         });
       }
@@ -106,9 +115,9 @@ const TransactionNew = (props: TransactionNewProps) => {
   };
   const validateForm = () => {
     const { destinationAccountId, originAccountId, amount, destinationAccount, bankAccounts } = transactionState;
-    let errors: any = {};
+    let errors: Errors = { destination: '', origin: '', amount: '' };
     let paramsOk: boolean = true;
-    const bankAccount = bankAccounts.find((account: any) => {
+    const bankAccount = bankAccounts.find((account: BankAccount) => {
       return account.number === destinationAccountId;
     });
 

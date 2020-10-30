@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { Transaction } from '../../types';
 
 export interface TransactionResumeProps {
-  transaction: any;
+  transaction: Transaction;
 }
 
 const TransactionResume = (props: TransactionResumeProps) => {
