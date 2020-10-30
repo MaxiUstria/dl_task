@@ -1,11 +1,5 @@
-import {
-  IAuthenticate,
-  IUnauthenticate,
-} from '../actions/current';
-import {
-  AUTHENTICATE,
-  UNAUTHENTICATE
-} from '../constants';
+import { IAuthenticate, IUnauthenticate } from '../actions/userActions';
+import { AUTHENTICATE, UNAUTHENTICATE } from '../constants';
 import { ICurrent } from '../../types';
 export default function currentReducer(
   state: ICurrent = {

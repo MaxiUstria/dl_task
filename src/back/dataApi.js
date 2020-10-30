@@ -1,44 +1,5 @@
 import * as data from './db.json';
 
-let transactions = [
-  {
-    amount: '123123',
-    comment: 'sadfas',
-    currency: 'USD',
-    destination: 'asdfas',
-    id: 1,
-    origin: '12345679',
-    user_id: 1,
-  },
-];
-
-let value = {
-  "USD": {
-    "USD": 1,
-    "$U": 42.70,
-    "EUR": 0.86
-  },
-  "EUR":{
-    "EUR": 1,
-    "USD": 1.17,
-    "$U": 49.84
-  },
-  "$U":{
-    "EUR": 0.020,
-    "USD": 0.023,
-    "$U": 1
-  }
-}
-
-
-export const logIn = (username, password) => {
-  const user = data.users.find((user) => {
-    return user.password === password && user.username === username;
-  });
-
-  return user || null;
-};
-
 export const getAccounts = async (userId) => {
   const resp = await fetch("http://localhost:3001/bankAccounts");
   const bankAccounts = await resp.json();
@@ -77,9 +38,6 @@ await fetch('http://localhost:3001/transactions', {
 });
 
 return transaction;
-
-
-
 
 };
 

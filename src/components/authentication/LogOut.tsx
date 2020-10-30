@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 
-import { unauthenticate } from '../../redux/actions/current';
+import { unauthenticate } from '../../redux/actions/userActions';
 import { ICurrent } from '../../types';
 
 export interface LogOutProps {

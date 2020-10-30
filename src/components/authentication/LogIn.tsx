@@ -3,7 +3,7 @@ import { TextField, Button, Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { authenticate } from '../../redux/actions/current';
+import { authenticate } from '../../redux/actions/userActions';
 import { ICurrent } from '../../types';
 
 export interface LogInProps {
@@ -54,14 +54,10 @@ const LogIn = (props: LogInProps) => {
           <br></br>
           <Grid container justify="flex-end">
             <Button
-              type="submit"
               variant="contained"
               color="primary"
               onClick={() =>
-                props.authenticateConnect(
-                  user.username,
-                  user.password,
-                )
+                props.authenticateConnect(user.username, user.password)
               }
             >
               Log in

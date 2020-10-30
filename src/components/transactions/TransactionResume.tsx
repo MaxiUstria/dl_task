@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import Navbar from '../commons/Navbar';
-
 export interface TransactionResumeProps {
   transaction: any;
 }
