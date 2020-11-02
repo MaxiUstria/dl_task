@@ -1,4 +1,4 @@
-name: Build & deploy to GitHub Pages
+name: Build & test
 on:
   push:
     branches:
@@ -23,10 +23,5 @@ jobs:
         run: npm install
       - name: Run build command
         run: npm run build
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_BRANCH: master
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build # The folder the action should deploy.
+      - name: Run test command
+        run: npm run test
