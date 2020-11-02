@@ -120,6 +120,16 @@
       "user_id": 1,
       "exchangeInfo": "$U-USD/0.023",
       "id": 5
+    },
+    {
+      "origin": "12345678",
+      "destination": "123",
+      "amount": 1234,
+      "currency": "USD",
+      "comment": "asdfasdf",
+      "user_id": 1,
+      "exchangeInfo": "USD-USD/1",
+      "id": 6
     }
   ]
 }
