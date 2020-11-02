@@ -1,9 +1,9 @@
 import React from 'react';
 import { ICurrent } from '../../types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import Navbar from './Navbar';
+import LogIn from '../authentication/LogIn';
 import BankAccountsPage from '../bankAccounts/BankAccountsPage';
 
 export interface HomeProps {
@@ -14,7 +14,7 @@ const Home = (props: HomeProps) => {
   return (
     <>
       {!props.isAuthenticated ? (
-        <Redirect to="/log_in" />
+        <LogIn />
       ) : (
         <>
           <Navbar />

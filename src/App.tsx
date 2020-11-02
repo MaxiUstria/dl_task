@@ -1,11 +1,10 @@
 import React from 'react';
-import { Redirect, Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './components/commons/Home';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import history from './utils/history';
 import LogIn from './components/authentication/LogIn';
 import TransactionNew from './components/transactions/TransactionNew';
 import TransactionResume from './components/transactions/TransactionResume';
