@@ -10,22 +10,22 @@ const TransactionResume = (props: TransactionResumeProps) => {
     <div>
       <h1>Transaction Resume</h1>
       <Container maxWidth="sm">
-        <p>
+        <p id="origin">
           <b>Origin Account:</b> {props.transaction.origin}
         </p>
-        <p>
+        <p id="destination">
           <b>Destination Account:</b> {props.transaction.destination}
         </p>
-        <p>
+        <p id="amount">
           <b>Amount:</b> {props.transaction.amount}
         </p>
-        <p>
+        <p id="currency">
           <b>Currency:</b> {props.transaction.currency}
         </p>
-        <p>
+        <p id="exchange">
           <b>Exchange Info:</b> {props.transaction.exchangeInfo}
         </p>
-        <p>
+        <p id="comment">
           <b>Comment:</b> {props.transaction.comment}
         </p>
       </Container>
