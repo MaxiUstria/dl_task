@@ -99,3 +99,14 @@ export const getUser = async (nickname) => {
 
   return user;
 };
+
+export const updateUserPassword = async (user, password) => {
+  user.password = password;
+  const resp = fetch(`http://localhost:3001/users/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+};

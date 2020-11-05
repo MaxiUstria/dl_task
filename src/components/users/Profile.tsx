@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Navbar from '../commons/Navbar';
 import LeftBar from '../commons/LeftBar';
 import UserInfo from './UserInfo';
+import PasswordModifyer from './PasswordModifyer';
 
 export interface ProfileProps {
-  user: User;
   isAuthenticated: boolean;
 }
 
@@ -28,7 +28,7 @@ const Profile = (props: ProfileProps) => {
           {pageSelector === 'user_info' ? (
             <UserInfo />
           ) : pageSelector === 'password' ? (
-            <p>Password</p>
+            <PasswordModifyer />
           ) : (
             <p>Bank Accounts</p>
           )}
@@ -46,7 +46,6 @@ const Profile = (props: ProfileProps) => {
 
 const mapStateToProps = (state: ICurrent) => {
   return {
-    user: state.user,
     isAuthenticated: state.isAuthenticated,
   };
 };
