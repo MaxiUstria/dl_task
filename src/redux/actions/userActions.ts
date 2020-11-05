@@ -41,4 +41,44 @@ export function unauthenticate(): IUnauthenticate {
     type: constants.UNAUTHENTICATE,
   };
 }
-export type AuthenticationAction = IAuthenticate | IUnauthenticate;
+
+export interface IUpdateUser {
+  type: constants.UPDATE_USER;
+  user: User;
+}
+
+export function fetchUser(user: User): IUpdateUser {
+  return {
+    type: constants.UPDATE_USER,
+    user: user,
+  };
+}
+
+export function updateUser(
+  user: User,
+  name: string,
+  surname: string,
+  username: string,
+) {
+  user.name = name;
+  user.surname = surname;
+  user.username = username;
+  return function (dispatch: Dispatch) {
+    return fetch(`http://localhost:3001/users/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    }).then((response) => {
+      response.json().then((newUser) => {
+        dispatch(fetchUser(newUser as User));
+      });
+    });
+  };
+}
+
+export type AuthenticationAction =
+  | IAuthenticate
+  | IUnauthenticate
+  | IUpdateUser;

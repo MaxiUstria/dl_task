@@ -88,3 +88,14 @@ changedAmount =
 return [changedAmount, exchangeInfo];
 
 };
+
+export const getUser = async (nickname) => {
+  const resp = await fetch('http://localhost:3001/users');
+  const users = await resp.json();
+
+  const user = users.find((user) => {
+    return user.username === nickname;
+  });
+
+  return user;
+};

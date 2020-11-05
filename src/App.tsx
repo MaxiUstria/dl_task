@@ -10,6 +10,7 @@ import TransactionNew from './components/transactions/TransactionNew';
 import TransactionResume from './components/transactions/TransactionResume';
 import TransactionIndex from './components/transactions/TransactionIndex';
 import NotFoundPage from './components/commons/NotFoundPage';
+import Profile from './components/users/Profile';
 
 
 function App() {
@@ -17,20 +18,25 @@ function App() {
     <div className="container-fluid">
       <BrowserRouter>
         <Switch>
-            <Route path="/" exact={true} component={Home} />
-            <Route
-              path="/new_transaction"
-              exact={true}
-              component={TransactionNew}
-            />
-            <Route
-              path="/show_transaction"
-              exact={true}
-              component={TransactionResume}
-            />
-            <Route path="/transactions" exact={true} component={TransactionIndex} />
-            <Route path="/log_in" exact={true} component={LogIn} />
-            <Route component={NotFoundPage} />
+          <Route path="/" exact={true} component={Home} />
+          <Route
+            path="/new_transaction"
+            exact={true}
+            component={TransactionNew}
+          />
+          <Route
+            path="/show_transaction"
+            exact={true}
+            component={TransactionResume}
+          />
+          <Route
+            path="/transactions"
+            exact={true}
+            component={TransactionIndex}
+          />
+          <Route path="/log_in" exact={true} component={LogIn} />
+          <Route path="/profile" exact={true} component={Profile} />
+          <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
       <ToastContainer />

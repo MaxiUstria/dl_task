@@ -4,3 +4,5 @@ export const UNAUTHENTICATE = 'UNAUTHENTICATE';
 export type UNAUTHENTICATE = typeof UNAUTHENTICATE;
 export const REQUEST_LOG_IN = 'REQUEST_LOG_IN';
 export type REQUEST_LOG_IN = typeof REQUEST_LOG_IN;
+export const UPDATE_USER = 'UPDATE_USER';
+export type UPDATE_USER = typeof UPDATE_USER;
