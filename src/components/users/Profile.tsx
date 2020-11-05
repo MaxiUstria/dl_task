@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { ICurrent, User } from '../../types';
+import { ICurrent } from '../../types';
 import { Redirect } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';

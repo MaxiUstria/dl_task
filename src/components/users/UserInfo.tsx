@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { getUser } from '../../back/dataApi';
 
 import Grid from '@material-ui/core/Grid';
-import { FormControl, InputLabel, TextField, Button } from '@material-ui/core';
+import { FormControl, TextField, Button } from '@material-ui/core';
 
 export interface UserInfoProps {
   user: User | null;
