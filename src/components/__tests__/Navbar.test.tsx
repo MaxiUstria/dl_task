@@ -41,8 +41,8 @@ it('renders user name on navbar', () => {
   expect(wrapper.find('.MuiTypography-root').text()).toBe('Welcome, John');
 });
 
-it('contains all 4 buttons', () => {
+it('contains all 5 buttons', () => {
   const wrapper = renderNavbar();
 
-  expect(wrapper.find('.MuiButtonBase-root').length).toBe(4);
+  expect(wrapper.find('.MuiButtonBase-root').length).toBe(5);
 });
