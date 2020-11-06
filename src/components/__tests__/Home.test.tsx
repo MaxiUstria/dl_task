@@ -48,7 +48,7 @@ it('if logged in should render bankAccount index', () => {
     'Welcome, John',
   );
 
-  expect(wrapper.find('.MuiButtonBase-root').length).toBe(4);
+  expect(wrapper.find('.MuiButtonBase-root').length).toBe(5);
 });
 
 it('if not logged in should render log in page', () => {
