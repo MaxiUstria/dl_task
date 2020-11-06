@@ -2,7 +2,11 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ICurrent, BankAccounts, User, BankAccount } from '../../types';
-import { getAccounts, deleteBankAccount } from '../../back/dataApi';
+import {
+  getAccounts,
+  deleteBankAccount,
+  findAccount,
+} from '../../back/dataApi';
 import { toast } from 'react-toastify';
 
 import Account from '../bankAccounts/Account';
@@ -13,6 +17,7 @@ export interface BankAccountsModifyerProps {
 
 const BankAccountsModifyer = (props: BankAccountsModifyerProps) => {
   const [bankAccounts, setBankAccounts] = useState<BankAccounts>([]);
+
   useEffect(() => {
     const { user } = props;
     if (!bankAccounts || bankAccounts.length === 0) {
@@ -36,7 +41,11 @@ const BankAccountsModifyer = (props: BankAccountsModifyerProps) => {
   return (
     <div>
       {bankAccounts.map((account: BankAccount) => (
-        <Account key={account.id} account={account} onDelete={deleteAccount} />
+        <Account
+          key={account.id}
+          account={account}
+          onDelete={deleteAccount}
+        />
       ))}
     </div>
   );

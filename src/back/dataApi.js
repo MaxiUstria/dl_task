@@ -124,3 +124,19 @@ export const deleteBankAccount = async (user, accountId) => {
     });
   }
 };
+
+export const updateAccount = async (oldAccount, newAccount, currency) => {
+  const account = await findAccount(oldAccount);
+  account.number = newAccount;
+  account.currency = currency;
+
+  const resp = await fetch(`http://localhost:3001/bankAccounts/${account.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(account),
+  });
+
+  return resp;
+};
