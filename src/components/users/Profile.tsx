@@ -9,6 +9,7 @@ import Navbar from '../commons/Navbar';
 import LeftBar from '../commons/LeftBar';
 import UserInfo from './UserInfo';
 import PasswordModifyer from './PasswordModifyer';
+import BankAccountsModifyer from './BankAccountsModifyer';
 
 export interface ProfileProps {
   isAuthenticated: boolean;
@@ -30,7 +31,7 @@ const Profile = (props: ProfileProps) => {
           ) : pageSelector === 'password' ? (
             <PasswordModifyer />
           ) : (
-            <p>Bank Accounts</p>
+            <BankAccountsModifyer />
           )}
         </Grid>
       </Grid>

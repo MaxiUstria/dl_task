@@ -102,11 +102,25 @@ export const getUser = async (nickname) => {
 
 export const updateUserPassword = async (user, password) => {
   user.password = password;
-  const resp = fetch(`http://localhost:3001/users/${user.id}`, {
+  fetch(`http://localhost:3001/users/${user.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
   });
+};
+
+export const deleteBankAccount = async (user, accountId) => {
+  const resp = await fetch(`http://localhost:3001/bankAccounts/${accountId}`);
+  const account = await resp.json();
+  if (account.user_id == user.id) {
+    fetch(`http://localhost:3001/bankAccounts/${accountId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(account),
+    });
+  }
 };
