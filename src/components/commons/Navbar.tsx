@@ -43,6 +43,14 @@ const Navbar = (props: NavbarProps) => {
         ) : (
           <></>
         )}
+        <Button
+          component={Link}
+          to="/profile"
+          variant="contained"
+          color="primary"
+        >
+          Profile
+        </Button>
         <LogOut />
       </Toolbar>
     </AppBar>
