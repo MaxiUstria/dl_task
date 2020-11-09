@@ -140,3 +140,13 @@ export const updateAccount = async (oldAccount, newAccount, currency) => {
 
   return resp;
 };
+
+export const checkUser = async (username, password) => {
+  const resp = await fetch(`http://localhost:3001/users/?username=${username}&password=${password}`);
+  const user = await resp.json();
+  if (user.length > 0){
+    return true;
+  }else{
+    return false;
+  }
+}

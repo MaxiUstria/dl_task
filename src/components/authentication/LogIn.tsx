@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { checkUser } from '../../back/dataApi';
+import { toast } from 'react-toastify';
 
 import { authenticate } from '../../redux/actions/userActions';
 import { ICurrent } from '../../types';
@@ -18,13 +20,24 @@ export interface LogInState {
 
 const LogIn = (props: LogInProps) => {
   const [user, setUser] = useState<LogInState>({
-    username: '', password: '' 
+    username: '',
+    password: '',
   });
   const setUsernameValue = (username: string) => {
     setUser({ ...user, username });
   };
   const setPasswordValue = (password: string) => {
     setUser({ ...user, password });
+  };
+
+  const logIn = async () => {
+    const correctUser = await checkUser(user.username, user.password);
+    if (correctUser) {
+      props.authenticateConnect(user.username, user.password);
+      toast.success('Logged in.');
+    } else {
+      toast.error('Login failed.');
+    }
   };
   return (
     <>
@@ -53,13 +66,7 @@ const LogIn = (props: LogInProps) => {
           </div>
           <br></br>
           <Grid container justify="flex-end">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                props.authenticateConnect(user.username, user.password)
-              }
-            >
+            <Button variant="contained" color="primary" onClick={logIn}>
               Log in
             </Button>
           </Grid>
