@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 
 export interface TransactionIndexProps {
   isAuthenticated?: boolean | null;
-  user?: User | null;
+  user?: User;
 }
 
 const TransactionIndex = (props: TransactionIndexProps) => {
@@ -28,7 +28,7 @@ const TransactionIndex = (props: TransactionIndexProps) => {
         setTransactions(transactions);
       });
     }
-  }, []);
+  });
   return (
     <div>
       {!props.isAuthenticated ? (

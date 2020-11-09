@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { FormControl, TextField, Button } from '@material-ui/core';
 
 export interface PasswordModifyerProps {
-  user?: User | null;
+  user?: User;
 }
 
 const PasswordModifyer = (props: PasswordModifyerProps) => {

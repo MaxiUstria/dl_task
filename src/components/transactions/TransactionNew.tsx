@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { findAccount, calculateAmount, createTransaction, getAccounts } from '../../back/dataApi';
+import {
+  findAccount,
+  calculateAmount,
+  createTransaction,
+  getAccounts,
+} from '../../back/dataApi';
 import { toast } from 'react-toastify';
 
 import TransactionFormReview from './TransactionFormReview';
@@ -19,7 +24,7 @@ import TransactionResume from './TransactionResume';
 
 export interface TransactionNewProps {
   isAuthenticated?: boolean | null;
-  user?: User | null;
+  user?: User;
   submitTransaction: (
     originAccountId: string,
     destinationAccountId: string,
@@ -65,14 +70,17 @@ const TransactionNew = (props: TransactionNewProps) => {
   );
   useEffect(() => {
     const { user } = props;
-    if (!transactionState.bankAccounts || transactionState.bankAccounts.length === 0) {
+    if (
+      !transactionState.bankAccounts ||
+      transactionState.bankAccounts.length === 0
+    ) {
       if (user) {
         getAccounts(user.id).then((bankAccounts: BankAccounts) => {
           setTransactionState({ ...transactionState, bankAccounts });
         });
       }
     }
-  }, []);
+  });
   const handleCommentValue = (comment: string) => {
     setTransactionState({ ...transactionState, comment });
   };
@@ -80,13 +88,21 @@ const TransactionNew = (props: TransactionNewProps) => {
     setTransactionState({ ...transactionState, originAccountId });
   };
   const handleDestinationAccountIdValue = (destinationAccountId: string) => {
-    findAccount(destinationAccountId)
-    .then(destinationAccount => {
-      if (destinationAccount)   {
+    findAccount(destinationAccountId).then((destinationAccount) => {
+      if (destinationAccount) {
         const convertedCurrency = destinationAccount.currency;
-        setTransactionState({ ...transactionState, destinationAccountId, destinationAccount, convertedCurrency });
-      } else{
-        setTransactionState({ ...transactionState, destinationAccountId, destinationAccount: {} })
+        setTransactionState({
+          ...transactionState,
+          destinationAccountId,
+          destinationAccount,
+          convertedCurrency,
+        });
+      } else {
+        setTransactionState({
+          ...transactionState,
+          destinationAccountId,
+          destinationAccount: {},
+        });
       }
     });
   };
@@ -97,7 +113,7 @@ const TransactionNew = (props: TransactionNewProps) => {
     let paramsOk: boolean = true;
     if (!transactionState.showFormReview) {
       paramsOk = validateForm();
-      if (paramsOk){
+      if (paramsOk) {
         calculateAmount(
           transactionState.originAccountId,
           transactionState.destinationAccountId,
@@ -112,13 +128,20 @@ const TransactionNew = (props: TransactionNewProps) => {
         });
       }
     } else if (paramsOk) {
-      setTransactionState({ ...transactionState, showFormReview: !transactionState.showFormReview });
+      setTransactionState({
+        ...transactionState,
+        showFormReview: !transactionState.showFormReview,
+      });
     }
-
-    
   };
   const validateForm = () => {
-    const { destinationAccountId, originAccountId, amount, destinationAccount, bankAccounts } = transactionState;
+    const {
+      destinationAccountId,
+      originAccountId,
+      amount,
+      destinationAccount,
+      bankAccounts,
+    } = transactionState;
     let errors: Errors = { destination: '', origin: '', amount: '' };
     let paramsOk: boolean = true;
     const bankAccount = bankAccounts.find((account: BankAccount) => {
@@ -132,8 +155,8 @@ const TransactionNew = (props: TransactionNewProps) => {
       if (bankAccount) {
         errors['destination'] = 'Destination can not be one of your accounts';
         paramsOk = false;
-      } else{
-        if (Object.keys(destinationAccount).length === 0){
+      } else {
+        if (Object.keys(destinationAccount).length === 0) {
           errors['destination'] = 'Account does not exist';
           paramsOk = false;
         }
@@ -150,12 +173,11 @@ const TransactionNew = (props: TransactionNewProps) => {
       paramsOk = false;
     }
 
-    setTransactionState({ ...transactionState,errors });
+    setTransactionState({ ...transactionState, errors });
 
     return paramsOk;
   };
   const newTransaction = () => {
-    
     createTransaction(
       transactionState.originAccountId,
       transactionState.destinationAccountId,
@@ -173,12 +195,8 @@ const TransactionNew = (props: TransactionNewProps) => {
     });
   };
   const renderContent = () => {
-    if (transactionState.showTransaction){
-      return (
-        <TransactionResume
-          transaction={transactionState.transaction}
-        />
-      );
+    if (transactionState.showTransaction) {
+      return <TransactionResume transaction={transactionState.transaction} />;
     }
     if (transactionState.showFormReview) {
       return (
@@ -201,7 +219,7 @@ const TransactionNew = (props: TransactionNewProps) => {
         {...transactionState}
       />
     );
-  }
+  };
   return (
     <div>
       {!props.isAuthenticated ? (
@@ -214,7 +232,7 @@ const TransactionNew = (props: TransactionNewProps) => {
       )}
     </div>
   );
-}
+};
 
 const mapStateToProps = (state: ICurrent) => {
   return {

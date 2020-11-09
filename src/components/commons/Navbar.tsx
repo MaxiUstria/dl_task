@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ICurrent, User } from '../../types';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import { AppBar, Toolbar, Button, Typography, Box } from '@material-ui/core';
 
 import LogOut from '../authentication/LogOut';
 
 export interface NavbarProps {
-  user?: User | null;
+  user?: User;
 }
 
 const Navbar = (props: NavbarProps) => {
