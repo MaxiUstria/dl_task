@@ -4,6 +4,7 @@ import { ICurrent, User } from '../../types';
 import { updateUser } from '../../redux/actions/userActions';
 import { useState } from 'react';
 import { getUser } from '../../back/dataApi';
+import { toast } from 'react-toastify';
 
 import Grid from '@material-ui/core/Grid';
 import { FormControl, TextField, Button } from '@material-ui/core';
@@ -41,6 +42,7 @@ const UserInfo = (props: UserInfoProps) => {
         newUser.surname,
         newUser.username,
       );
+      toast.success('Profile updated.');
     }
   };
 
@@ -59,7 +61,7 @@ const UserInfo = (props: UserInfoProps) => {
       setErrors({ ...errors, username: "Username can't be blank." });
     } else {
       const askedUser = await getUser(username);
-      if (askedUser && props.user?.username === askedUser.username) {
+      if (askedUser && props.user?.username !== askedUser.username) {
         formOk = false;
         setErrors({ ...errors, username: 'Username already taken.' });
       }
